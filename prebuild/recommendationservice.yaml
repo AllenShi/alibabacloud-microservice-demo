@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recommendationservice
+spec:
+  selector:
+    matchLabels:
+      app: recommendationservice
+  template:
+    metadata:
+      labels:
+        app: recommendationservice
+        version: 1.0.0-SNAPSHOT
+    spec:
+      containers:
+        - name: recommendationservice
+          image: registry.cn-hangzhou.aliyuncs.com/ahas_userone/alibaba-micro-recommendationservice:1.0.0
+          # imagePullPolicy: Always
+          env:
+            - name: dubbo.registry.address
+              value: "nacos://nacos-server:8848"
+            - name: spring.cloud.nacos.discovery.server-addr
+              value: "nacos-server:8848"
+            - name: spring.cloud.nacos.config.server-addr
+              value: "nacos-server:8848"
